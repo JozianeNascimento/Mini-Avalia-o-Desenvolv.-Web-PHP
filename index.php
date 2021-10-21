@@ -12,16 +12,19 @@ $p = new Aluno("CRUDFATEC","localhost","root","");
 </head>
 <body>
     <?php
-    if(isset(_$POST['nome']))
+    if(isset($_POST['nome']))
     {
         $nome = addslashes($_POST['nome']);
         $telefone = addslashes($_POST['telefone']);
         $email = addslashes($_POST['email']);
         $curso = addslashes($_POST['curso']);
 
-        if(!$p->cadastrarAluno($nome, $telefone,$email,$curso){
-            echo "Aluno já cadastrado"
+        if(!empty($nome) && !empty($telefone) && !empty($email) && !empty($curso))
+        {
+            if(!$p->cadastrarAluno($nome, $telefone,$email,$curso)){
+            echo "Aluno já cadastrado";
         }
+    }
     }
 
     ?>
@@ -47,10 +50,11 @@ $p = new Aluno("CRUDFATEC","localhost","root","");
                 <td>Email</td>
                 <td colspan="2">Curso</td>
             </tr>
+            <tr>
         <?php
             $dados = $p->buscarDados();
-            if(count(dados) > 0) {
-                for($i=0; $i < count(dados); $i++){
+            if(count($dados) > 0) {
+                for($i=0; $i < count($dados); $i++){
                     echo "<tr>";
                     foreach($dados[$i] as $k =>$v){
                         if($k != "id")
@@ -58,14 +62,15 @@ $p = new Aluno("CRUDFATEC","localhost","root","");
                             echo "<td>".$v."</td>";
                         }
                     }
-                    ?><td>
+                    ?>
+                    <td>
                         <a href="index.php?id=<?php echo $dados[$i]['id']; ?>">Excluir</a>
                     </td>
                     <?php
                     echo "</tr";
                 }   
             }
-        ?>
+        ?></tr>
                 
     </table>
     </section>
