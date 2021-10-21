@@ -7,7 +7,7 @@ class Aluno
     {
     try
     {
-        $this->pdo = new PDO("mysql:dbname=".$dbname";host=".$host,$user,$senha);
+        $this->pdo = new PDO("mysql:dbname=".$dbname.";host=".$host,$user,$senha);
     }
     catch(Exception $e)
     {
@@ -18,7 +18,7 @@ class Aluno
 
     public function buscarDados(){
         $res = array();
-        $cmd = $this->pdo->query("SELECT * FROM alunos ORDER BY nome");
+        $cmd = $this->pdo->query("SELECT * FROM Alunos ORDER BY nome");
         $res = $cmd->fetchALL(PDO::FETCH_ASSOC);
         return $res;
     }
@@ -35,9 +35,9 @@ class Aluno
             $cmd = $this->pdo->prepare("INSERT INTO alunos (nome, telefone, email, curso) VALUES (:n,:t,:e, :c)");
             $cmd->bindValue(":n",$nome);
             $cmd->bindValue(":t",$telefone);
-            $cmd->bindValue(":n",$email);
-            $cmd->bindValue(":n",$curso);
-            $cmd->exeute(); 
+            $cmd->bindValue(":e",$email);
+            $cmd->bindValue(":c",$curso);
+            $cmd->execute(); 
             return true;
         }
 
@@ -46,7 +46,7 @@ class Aluno
     public function excluirAluno($id){
         $cmd =$this->pdo->prepare("DELETE FROM alunos WHERE id = :id");
         $cmd->bindValue(":id",$id);
-        $cmd->exeute();
+        $cmd->execute();
     }
 
 
